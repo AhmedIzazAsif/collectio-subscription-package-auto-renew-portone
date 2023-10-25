@@ -35,6 +35,7 @@ buid().then((app) => {
       if (err) console.log(err);
       console.log(`server is listening on port ${PORT}`);
       // starting the process for every day
+
       setInterval(() => {
         startProcess()
           .then((message) => console.log(message))

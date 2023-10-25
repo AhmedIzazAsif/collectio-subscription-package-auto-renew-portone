@@ -1,9 +1,26 @@
 import axios from "axios";
-axios.defaults.headers["x-access-token"] = process.env.API_KEY || "";
+import { isTokenExpired } from "../../utils/verifyToken";
+import { getAuthToken, setAuthToken } from "../../utils/auth";
 const EXTERNAL_API_BASE = process.env.EXTERNAL_API_BASE;
 const EXTERNAL_API_VERSION = process.env.EXTERNAL_API_VERSION;
 
 export const startProcess = async () => {
+  let message: string =
+    "Process for " + new Date() + " has been completed successfully";
+
+  //check authentication token if it has been expired or not if expired? then authenticate with the email and password
+  // which has been stored in the env.. then the token will be stored in the memory.
+  const tokenExpired: boolean = await isTokenExpired(getAuthToken() || "");
+  if (tokenExpired) {
+    const authenticated = await makeAuthentication();
+    if (!authenticated) {
+      console.log(
+        "Authentication Failed, Check your credentials at environment"
+      );
+      return;
+    }
+  }
+  // after authentication done start the process
   console.log("process started for:", Date());
   let page = 1;
   const days = 6;
@@ -38,12 +55,34 @@ export const startProcess = async () => {
         }
       }
       page++;
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       gotEmptyArray = true;
+      message = error.message || "Something went wrong";
       break;
     }
   }
 
-  return "Process for " + new Date() + " has been completed successfully";
+  return message;
+};
+
+const makeAuthentication = async () => {
+  let authenticated = false;
+  try {
+    const authPayload = {
+      email: process.env.AUTH_EMAIL,
+      password: process.env.AUTH_PASSWORD,
+    };
+    const authResponse = await axios.post(
+      `${EXTERNAL_API_BASE}/${EXTERNAL_API_VERSION}/users/auth/password-login`,
+      authPayload
+    );
+    const jwtToken = authResponse?.data?.output?.jwtToken;
+    setAuthToken(jwtToken);
+    axios.defaults.headers["x-access-token"] = jwtToken;
+    authenticated = true;
+    return authenticated;
+  } catch (error) {
+    return authenticated;
+  }
 };
