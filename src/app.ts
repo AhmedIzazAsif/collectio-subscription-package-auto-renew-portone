@@ -1,9 +1,9 @@
 import "dotenv/config";
 import fastify from "fastify";
-import plugins from "./plugins";
 import fastifyRequestContext from "@fastify/request-context";
 import fastifyFormbody from "@fastify/formbody";
 import Ajv from "ajv";
+import { startProcess } from "./process";
 
 const app = fastify();
 const PORT = +(process.env.PORT || 5000);
@@ -22,7 +22,6 @@ app.setValidatorCompiler(({ schema }) => {
 async function buid() {
   app.register(fastifyRequestContext);
   app.register(fastifyFormbody);
-  await app.register(plugins);
   return app;
 }
 
@@ -35,6 +34,12 @@ buid().then((app) => {
     (err) => {
       if (err) console.log(err);
       console.log(`server is listening on port ${PORT}`);
+      // starting the process for every day
+      setInterval(() => {
+        startProcess()
+          .then((message) => console.log(message))
+          .catch((error) => console.log(error));
+      }, 24 * 60 * 60 * 1000);
     }
   );
 });
