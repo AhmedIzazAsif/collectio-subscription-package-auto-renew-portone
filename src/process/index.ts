@@ -1,33 +1,15 @@
 import axios from "axios";
-import { isTokenExpired } from "../../utils/verifyToken";
-import { getAuthToken, setAuthToken } from "../../utils/auth";
-const EXTERNAL_API_BASE = process.env.EXTERNAL_API_BASE;
-const EXTERNAL_API_VERSION = process.env.EXTERNAL_API_VERSION;
+import { EXTERNAL_API_BASE, EXTERNAL_API_VERSION } from "../app";
+import { checkAuthentication } from "../../utils/auth";
 
 export const startProcess = async () => {
-  let message: string =
-    "Process for " + new Date() + " has been completed successfully";
-
-  //check authentication token if it has been expired or not if expired? then authenticate with the email and password
-  // which has been stored in the env.. then the token will be stored in the memory.
-  const tokenExpired: boolean = await isTokenExpired(getAuthToken() || "");
-  if (tokenExpired) {
-    const authenticated = await makeAuthentication();
-    if (!authenticated) {
-      console.log(
-        "Authentication Failed, Check your credentials at environment"
-      );
-      return;
-    }
-  }
-  // after authentication done start the process
   console.log("process started for:", Date());
+  let multiDeviceDetected = false;
   let page = 1;
   const days = 6;
   const limit = 10;
   let gotEmptyArray = false;
-
-  while (!gotEmptyArray) {
+  while (!gotEmptyArray && !multiDeviceDetected) {
     try {
       const response = await axios.get(
         `${EXTERNAL_API_BASE}/${EXTERNAL_API_VERSION}/cms/subscription/auto-renew/portone?limit=${limit}&days=${days}&page=${page}`
@@ -56,33 +38,25 @@ export const startProcess = async () => {
       }
       page++;
     } catch (error: any) {
-      console.error(error);
-      gotEmptyArray = true;
-      message = error.message || "Something went wrong";
-      break;
+      if (error?.response?.data?.errorCode === "MULTI_DEVICE_LOGIN_DETECTED") {
+        multiDeviceDetected = true;
+        break;
+      } else {
+        console.error(error);
+        gotEmptyArray = true;
+        break;
+      }
     }
   }
 
-  return message;
-};
-
-const makeAuthentication = async () => {
-  let authenticated = false;
-  try {
-    const authPayload = {
-      email: process.env.AUTH_EMAIL,
-      password: process.env.AUTH_PASSWORD,
-    };
-    const authResponse = await axios.post(
-      `${EXTERNAL_API_BASE}/${EXTERNAL_API_VERSION}/users/auth/password-login`,
-      authPayload
+  if (multiDeviceDetected) {
+    console.log(
+      "Multi device detected! Now authenticating again for start the process"
     );
-    const jwtToken = authResponse?.data?.output?.jwtToken;
-    setAuthToken(jwtToken);
-    axios.defaults.headers["x-access-token"] = jwtToken;
-    authenticated = true;
-    return authenticated;
-  } catch (error) {
-    return authenticated;
+    checkAuthentication(multiDeviceDetected)
+      .then((_) => console.log("Authentication successfull"))
+      .catch((_) =>
+        console.log("Authentication error during multi device detection")
+      );
   }
 };
