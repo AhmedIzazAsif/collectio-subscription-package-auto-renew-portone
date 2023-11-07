@@ -1,0 +1,4 @@
+{"level":"INFO","time":"07-11-2023 15:18:48","pid":"[Redacted]","hostname":"[Redacted]","msg":"Server TS: Process Starting at: Tue Nov 07 2023 15:18:48 GMT+0600 (Bangladesh Standard Time)"}
+{"level":"INFO","time":"07-11-2023 15:18:48","pid":"[Redacted]","hostname":"[Redacted]","msg":"Process/Index TS: Fetching renew list at - Tue Nov 07 2023 15:18:48 GMT+0600 (Bangladesh Standard Time)"}
+{"level":"INFO","time":"07-11-2023 15:18:49","pid":"[Redacted]","hostname":"[Redacted]","msg":"Process/Index TS: Got empty array from renew list api for page 2."}
+{"level":"INFO","time":"07-11-2023 15:18:49","pid":"[Redacted]","hostname":"[Redacted]","msg":"Server TS: Process completed successfully at: Tue Nov 07 2023 15:18:49 GMT+0600 (Bangladesh Standard Time)"}

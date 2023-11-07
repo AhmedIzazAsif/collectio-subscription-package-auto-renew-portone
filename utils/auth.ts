@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { EXTERNAL_API_BASE, EXTERNAL_API_VERSION } from '../src/app';
 import { startProcess } from '../src/process';
+import { EXTERNAL_API_BASE, EXTERNAL_API_VERSION } from '../src/server';
+import { logger } from './logger';
 import { isTokenExpired } from './verifyToken';
 
 // auth.js
@@ -46,12 +47,13 @@ export const authentication = async () => {
             password: process.env.AUTH_PASSWORD,
         };
         const authResponse = await axios.post(`${EXTERNAL_API_BASE}/${EXTERNAL_API_VERSION}/users/auth/password-login`, authPayload);
+
         const jwtToken = authResponse?.data?.output?.jwtToken;
         setAuthToken(jwtToken);
         axios.defaults.headers['x-access-token'] = jwtToken;
         authenticated = true;
     } catch (error) {
-        console.log('Error during authentication', error);
+        logger.error(error, 'Auth TS: Error occured during authentication');
     }
 
     return authenticated;
