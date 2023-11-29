@@ -23,23 +23,23 @@ export const startProcess = async () => {
                 break;
             }
 
-            // for (let index = 0; index < data.length; index++) {
-            //     const item = data[index];
-            //     const subscription = {
-            //         userId: item?.userId,
-            //         subscriptionRequestId: item?.subscriptionRequestId,
-            //         subscriptionPackageId: item?.subscriptionPackageId,
-            //     };
+            for (let index = 0; index < data.length; index++) {
+                const item = data[index];
+                const subscription = {
+                    userId: item?.userId,
+                    subscriptionRequestId: item?.subscriptionRequestId,
+                    subscriptionPackageId: item?.subscriptionPackageId,
+                };
 
-            //     const url = `${EXTERNAL_API_BASE}/${EXTERNAL_API_VERSION}/cms/subscription/auto-renew/portone/single`;
-            //     try {
-            //         const postResponse = await axios.post(url, subscription);
-            //         logger.info(subscription, `Process/Index TS: Processing payment for - ${subscription.subscriptionRequestId}`);
-            //         logger.info(postResponse?.data, `Process/Index TS: Got Payment response for - ${subscription.subscriptionRequestId}`);
-            //     } catch (err) {
-            //         logger.error(err, `Process/Index TS: Got error during payment for - ${subscription.subscriptionRequestId}`);
-            //     }
-            // }
+                const url = `${EXTERNAL_API_BASE}/${EXTERNAL_API_VERSION}/cms/subscription/auto-renew/portone/single`;
+                try {
+                    const postResponse = await axios.post(url, subscription);
+                    logger.info(subscription, `Process/Index TS: Processing payment for - ${subscription.subscriptionRequestId}`);
+                    logger.info(postResponse?.data, `Process/Index TS: Got Payment response for - ${subscription.subscriptionRequestId}`);
+                } catch (err) {
+                    logger.error(err, `Process/Index TS: Got error during payment for - ${subscription.subscriptionRequestId}`);
+                }
+            }
             page++;
         } catch (error: any) {
             if (error?.response?.data?.errorCode === 'MULTI_DEVICE_LOGIN_DETECTED') {
