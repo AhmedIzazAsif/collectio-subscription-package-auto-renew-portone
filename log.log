@@ -124,3 +124,13 @@
 {"level":"INFO","time":"14-12-2023 11:03:52","pid":"[Redacted]","hostname":"[Redacted]","msg":"Process/Index TS: Fetching renew list at - Thu Dec 14 2023 11:03:52 GMT+0600 (Bangladesh Standard Time)"}
 {"level":"INFO","time":"14-12-2023 11:03:53","pid":"[Redacted]","hostname":"[Redacted]","msg":"Process/Index TS: Got empty array from renew list api for page 1."}
 {"level":"INFO","time":"14-12-2023 11:03:53","pid":"[Redacted]","hostname":"[Redacted]","msg":"Server TS: Process completed successfully at: Thu Dec 14 2023 11:03:53 GMT+0600 (Bangladesh Standard Time)"}
+{"level":"INFO","time":"15-12-2023 18:57:56","pid":"[Redacted]","hostname":"[Redacted]","msg":"Server TS: Process Starting at: Fri Dec 15 2023 18:57:56 GMT+0600 (Bangladesh Standard Time)"}
+{"level":"INFO","time":"15-12-2023 18:57:58","pid":"[Redacted]","hostname":"[Redacted]","msg":"Process/Index TS: Fetching renew list at - Fri Dec 15 2023 18:57:58 GMT+0600 (Bangladesh Standard Time)"}
+{"level":"INFO","time":"15-12-2023 18:58:00","pid":"[Redacted]","hostname":"[Redacted]","userId":"X3J2mWsdo4Kv","subscriptionRequestId":"cs_1697062188562_X3J2mWsdo4Kv","subscriptionPackageId":41,"msg":"Process/Index TS: Processing payment for - cs_1697062188562_X3J2mWsdo4Kv"}
+{"level":"INFO","time":"15-12-2023 18:58:00","pid":"[Redacted]","hostname":"[Redacted]","status":"success","message":"Payment Successfull","output":{"imp_uid":"imps_295079138015","customer_uid":"cs_1697062188562_X3J2mWsdo4Kv","merchant_uid":"cs_1702645079102_X3J2mWsdo4Kv"},"msg":"Process/Index TS: Got Payment response for - cs_1697062188562_X3J2mWsdo4Kv"}
+{"level":"INFO","time":"15-12-2023 18:58:00","pid":"[Redacted]","hostname":"[Redacted]","msg":"Process/Index TS: Got empty array from renew list api for page 2."}
+{"level":"INFO","time":"15-12-2023 18:58:00","pid":"[Redacted]","hostname":"[Redacted]","msg":"Server TS: Process completed successfully at: Fri Dec 15 2023 18:58:00 GMT+0600 (Bangladesh Standard Time)"}
+{"level":"INFO","time":"16-12-2023 21:45:14","pid":"[Redacted]","hostname":"[Redacted]","msg":"Server TS: Process Starting at: Sat Dec 16 2023 21:45:14 GMT+0600 (Bangladesh Standard Time)"}
+{"level":"INFO","time":"16-12-2023 21:45:15","pid":"[Redacted]","hostname":"[Redacted]","msg":"Process/Index TS: Fetching renew list at - Sat Dec 16 2023 21:45:15 GMT+0600 (Bangladesh Standard Time)"}
+{"level":"INFO","time":"16-12-2023 21:45:15","pid":"[Redacted]","hostname":"[Redacted]","msg":"Process/Index TS: Got empty array from renew list api for page 1."}
+{"level":"INFO","time":"16-12-2023 21:45:15","pid":"[Redacted]","hostname":"[Redacted]","msg":"Server TS: Process completed successfully at: Sat Dec 16 2023 21:45:15 GMT+0600 (Bangladesh Standard Time)"}
